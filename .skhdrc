@@ -1,3 +1,15 @@
+# **************************************************************************** #
+#                                                                              #
+#                                                         :::      ::::::::    #
+#    .skhdrc                                            :+:      :+:    :+:    #
+#                                                     +:+ +:+         +:+      #
+#    By: rsudo <rsudo@student.42tokyo.jp>           +#+  +:+       +#+         #
+#                                                 +#+#+#+#+#+   +#+            #
+#    Created: 2021/09/10 20:30:08 by rsudo             #+#    #+#              #
+#    Updated: 2021/09/11 14:49:47 by rsudo            ###   ########.fr        #
+#                                                                              #
+# **************************************************************************** #
+
 # focus window
 # alt - x : yabai -m window --focus recent
 alt - h : yabai -m window --focus west
@@ -22,13 +34,13 @@ shift + cmd - l : yabai -m window --warp east
 shift + alt - 0 : yabai -m space --balance
 
 # make floating window fill screen
-shift + alt - up     : yabai -m window --grid 1:1:0:0:1:1
+shift + alt + cmd - up     : yabai -m window --grid 1:1:0:0:1:1
 
 # make floating window fill left-half of screen
-shift + alt - left   : yabai -m window --grid 1:2:0:0:1:1
+shift + alt + cmd - left   : yabai -m window --grid 1:2:0:0:1:1
 
 # make floating window fill right-half of screen
-shift + alt - right  : yabai -m window --grid 1:2:1:0:1:1
+shift + alt + cmd  - right  : yabai -m window --grid 1:2:1:0:1:1
 
 # increase window size
 cmd + alt - a  : yabai -m window --resize left:-120:0  || yabai -m window --resize right:-120:0
@@ -43,18 +55,18 @@ alt - n  : yabai -m display --focus recent
 alt + cmd - n  : yabai -m window --display recent && yabai -m display --focus recent
 
 # create desktop, move window and follow focus - uses jq for parsing json (brew install jq)
-shift + cmd - w : yabai -m space --create && \
+cmd + alt - e : yabai -m space --create && \
                   index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
                   yabai -m window --space "${index}" && \
                   yabai -m space --focus "${index}"
 
 # create desktop and follow focus - uses jq for parsing json (brew install jq)
-cmd + alt - w : yabai -m space --create && \
-                index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
-                yabai -m space --focus "${index}"
+# cmd + alt - w : yabai -m space --create && \
+#                 index="$(yabai -m query --spaces --display | jq 'map(select(."native-fullscreen" == 0))[-1].index')" && \
+#                 yabai -m space --focus "${index}"
 
 # destroy desktop
-cmd + alt - d : yabai -m space --destroy
+cmd + alt - q : yabai -m space --destroy
 
 # rotate tree
 alt - r : yabai -m space --rotate 90
@@ -81,3 +93,7 @@ alt - e : yabai -m window --toggle split
 # alt - t : yabai -m window --toggle float && /tmp/yabai-restore/$(yabai -m query --windows --window | jq -re '.id').restore 2>/dev/null || true
 alt - t : yabai -m window --toggle float && yabai -m window --grid 4:4:1:1:2:2
 
+# change layout of desktop
+ctrl + alt - h : chunkc tiling::desktop --layout bsp
+ctrl + alt - j : chunkc tiling::desktop --layout monocle
+ctrl + alt - k : chunkc tiling::desktop --layout float
