@@ -10,13 +10,12 @@ fi
 
 # Path to your oh-my-zsh installation.
 export ZSH="/Users/sudourio/.oh-my-zsh"
-export LANG=C
 # Set name of the theme to load --- if set to "random", it will
 # load a random theme each time oh-my-zsh is loaded, in which case,
 # to know which specific one was loaded, run: echo $RANDOM_THEME
 # See https://github.com/ohmyzsh/ohmyzsh/wiki/Themes
 # ZSH_THEME="robbyrussell"
-ZSH_THEME="powerlevel10k/powerlevel10k"
+# ZSH_THEME="powerlevel10k/powerlevel10k"
 POWERLEVEL9K_MODE="awesome-patched"
 
 # Set list of themes to pick from when loading at random
@@ -88,7 +87,7 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 # You may need to manually set your language environment
-# export LANG=en_US.UTF-8
+export LANG=en_US.UTF-8
 
 # Preferred editor for local and remote sessions
 # if [[ -n $SSH_CONNECTION ]]; then
@@ -111,7 +110,13 @@ source $ZSH/oh-my-zsh.sh
 alias c="clear"
 alias gitsb="git status -sb"
 alias gitlog='git log --all --graph --pretty=format:"%Cred%h%Creset %C(bold blue)%an%Creset :%C(yellow)%d%Creset %s %Cgreen(%cr) %Creset" --abbrev-commit'
-#
+alias openwid='open /Users/sudourio/Library/Application\ Support/Übersicht/widgets'
+
+function mdview() {
+	markdown $1 | lynx -stdin
+}
+
+
 setopt no_beep
 setopt nolistbeep
 
