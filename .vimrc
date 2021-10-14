@@ -12,6 +12,7 @@ Plugin 'cohama/lexima.vim' "括弧の自動補完
 Plugin 'justmao945/vim-clang'
 Plugin 'itchyny/lightline.vim'
 Plugin 'w0ng/vim-hybrid'
+Plugin 'deoplete-plugins/deoplete-clang'
 
 call vundle#end()
 filetype plugin indent on
