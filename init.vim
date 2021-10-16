@@ -49,6 +49,8 @@ call dein#add('itchyny/lightline.vim')
 
 call dein#add('preservim/nerdtree')
 
+call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
+
 " Required:
 call dein#end()
 
