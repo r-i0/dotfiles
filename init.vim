@@ -146,6 +146,11 @@ call dein#add('ryanoasis/vim-devicons')
 
 call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
+call dein#add('kassio/neoterm')
+call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
+call dein#add('yuki-yano/fzf-preview.vim', { 'rev': 'release/rpc' })
+call dein#add('junegunn/rainbow_parentheses.vim')
+
 " Required:
 call dein#end()
 
@@ -214,4 +219,11 @@ highlight LineNr ctermbg=NONE guibg=NONE
 highlight Folded ctermbg=NONE guibg=NONE
 highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
+"neoterm"
+let g:neoterm_default_mod='belowright'
+let g:neoterm_autoscroll=1
+
+"かっこ色"
+let g:rainbow#max_level = 16
+let g:rainbow#pairs = [['(', ')'], ['[', ']']]
 
