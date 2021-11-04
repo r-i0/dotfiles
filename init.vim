@@ -1,14 +1,21 @@
 set number
 
 set autoindent
+set smartindent
+set	cindent
 
 set splitright
+
+set clipboard=unnamed  "yank した文字列をクリップボードにコピー
 
 set hls
 
 set mouse=a
 
 set noswapfile
+set noshowmode
+
+set virtualedit=onemore
 
 set autoread  "auto-read when editting file is changed
 
@@ -25,7 +32,7 @@ set ignorecase
 
 set wrapscan
 
-set pumblend=30
+""set pumblend=10
 
 set tabstop=4
 set shiftwidth=4
@@ -46,7 +53,7 @@ map k gk
 
 "---terminal---
 set shell=/bin/zsh
-tnoremap <silent> <ESC><ESC> <C-\><C-n>
+tnoremap <silent> jj <C-\><C-n>
 nnoremap <silent> <Leader>t :call ToggleTerminalMRU()<CR>
 
 let g:mru_buffer = 1
@@ -131,13 +138,14 @@ call dein#add('/Users/sudourio/.cache/dein/repos/github.com/Shougo/dein.vim')
 " Add or remove your plugins here like this:
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-call dein#add('Shougo/deoplete.nvim')
-call dein#add('zchee/deoplete-clang')
+""call dein#add('Shougo/deoplete.nvim')
+""call dein#add('zchee/deoplete-clang')
 "theme
 "call dein#add('projekt0n/github-nvim-theme')
-call dein#add('ful1e5/onedark.nvim')
+""call dein#add('ful1e5/onedark.nvim')
+call dein#add('morhetz/gruvbox')
 "構文チェックを行う。
-call dein#add('scrooloose/syntastic')
+""call dein#add('scrooloose/syntastic')
 "() 色付け:
 call dein#add('itchyny/lightline.vim')
 "tree
@@ -146,10 +154,21 @@ call dein#add('ryanoasis/vim-devicons')
 
 call dein#add('neoclide/coc.nvim', { 'merged': 0, 'rev': 'release' })
 
-call dein#add('kassio/neoterm')
+""call dein#add('kassio/neoterm')
 call dein#add('junegunn/fzf', { 'build': './install --all', 'merged': 0 })
 call dein#add('yuki-yano/fzf-preview.vim', { 'rev': 'release/rpc' })
 call dein#add('junegunn/rainbow_parentheses.vim')
+"git"
+call dein#add('lambdalisue/vim-gita')
+call dein#add('tpope/vim-fugitive')
+call dein#add('airblade/vim-gitgutter')
+
+"シンタックス"
+call dein#add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
+"コメントアウト"
+call dein#add('tpope/vim-commentary')
+
+""call dein#add('')
 
 " Required:
 call dein#end()
@@ -169,7 +188,7 @@ let g:molokai_original = 1
 let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.8/lib/libclang-3.8.so.1'
 let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
 
-nnoremap <silent> <C-e> :NERDTree<CR>
+nnoremap <silent> <C-e> :NERDTreeToggle<CR>
 
 " 表示幅
 let g:NERDTreeWinSize=30
@@ -210,14 +229,15 @@ let g:github_colors = {
 \ }
 
 " Load the colorscheme
-colorscheme onedark
+""colorscheme onedark
+colorscheme gruvbox
 
 "透明
-highlight Normal ctermbg=NONE guibg=NONE
-highlight NonText ctermbg=NONE guibg=NONE
-highlight LineNr ctermbg=NONE guibg=NONE
-highlight Folded ctermbg=NONE guibg=NONE
-highlight EndOfBuffer ctermbg=NONE guibg=NONE
+""highlight Normal ctermbg=NONE guibg=NONE
+""highlight NonText ctermbg=NONE guibg=NONE
+""highlight LineNr ctermbg=NONE guibg=NONE
+""highlight Folded ctermbg=NONE guibg=NONE
+""highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
 "neoterm"
 let g:neoterm_default_mod='belowright'
@@ -227,3 +247,69 @@ let g:neoterm_autoscroll=1
 let g:rainbow#max_level = 16
 let g:rainbow#pairs = [['(', ')'], ['[', ']']]
 
+"fzf keymap"
+noremap <fzf-p> <Nop>
+map     ;       <fzf-p>
+noremap ;;      ;
+noremap <dev>   <Nop>
+map     m       <dev>
+
+nnoremap <silent> <fzf-p>r     :<C-u>CocCommand fzf-preview.FromResources buffer project_mru<CR>
+nnoremap <silent> <fzf-p>w     :<C-u>CocCommand fzf-preview.ProjectMrwFiles<CR>
+nnoremap <silent> <fzf-p>a     :<C-u>CocCommand fzf-preview.FromResources project_mru git<CR>
+nnoremap <silent> <fzf-p>g     :<C-u>CocCommand fzf-preview.GitActions<CR>
+nnoremap <silent> <fzf-p>s     :<C-u>CocCommand fzf-preview.GitStatus<CR>
+nnoremap <silent> <fzf-p>b     :<C-u>CocCommand fzf-preview.Buffers<CR>
+nnoremap <silent> <fzf-p>B     :<C-u>CocCommand fzf-preview.AllBuffers<CR>
+nnoremap <silent> <fzf-p><C-o> :<C-u>CocCommand fzf-preview.Jumps<CR>
+nnoremap <silent> <fzf-p>/     :<C-u>CocCommand fzf-preview.Lines --resume --add-fzf-arg=--no-sort<CR>
+nnoremap <silent> <fzf-p>*     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+xnoremap <silent> <fzf-p>*     "sy:CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="<C-r>=substitute(@s, '\(^\\v\)\\|\\\(<\\|>\)', '', 'g')<CR>"<CR>
+nnoremap <silent> <fzf-p>n     :<C-u>CocCommand fzf-preview.Lines --add-fzf-arg=--no-sort --add-fzf-arg=--query="<C-r>=substitute(@/, '\(^\\v\)\\|\\\(<\\|>\)', '', 'g')<CR>"<CR>
+nnoremap <silent> <fzf-p>?     :<C-u>CocCommand fzf-preview.BufferLines --resume --add-fzf-arg=--no-sort<CR>
+nnoremap          <fzf-p>f     :<C-u>CocCommand fzf-preview.ProjectGrep<Space>
+xnoremap          <fzf-p>f     "sy:CocCommand fzf-preview.ProjectGrep<Space>-F<Space>"<C-r>=substitute(substitute(@s, '\n', '', 'g'), '/', '\\/', 'g')<CR>"
+nnoremap <silent> <fzf-p>q     :<C-u>CocCommand fzf-preview.QuickFix<CR>
+nnoremap <silent> <fzf-p>l     :<C-u>CocCommand fzf-preview.LocationList<CR>
+nnoremap <silent> <fzf-p>:     :<C-u>CocCommand fzf-preview.CommandPalette<CR>
+nnoremap <silent> <fzf-p>p     :<C-u>CocCommand fzf-preview.Yankround<CR>
+nnoremap <silent> <fzf-p>m     :<C-u>CocCommand fzf-preview.Bookmarks --resume<CR>
+nnoremap <silent> <fzf-p><C-]> :<C-u>CocCommand fzf-preview.VistaCtags --add-fzf-arg=--query="<C-r>=expand('<cword>')<CR>"<CR>
+nnoremap <silent> <fzf-p>o     :<C-u>CocCommand fzf-preview.VistaBufferCtags<CR>
+
+nnoremap <silent> <dev>q  :<C-u>CocCommand fzf-preview.CocCurrentDiagnostics<CR>
+nnoremap <silent> <dev>Q  :<C-u>CocCommand fzf-preview.CocDiagnostics<CR>
+nnoremap <silent> <dev>rf :<C-u>CocCommand fzf-preview.CocReferences<CR>
+nnoremap <silent> <dev>t  :<C-u>CocCommand fzf-preview.CocTypeDefinitions<CR>
+
+nmap <silent> gd <Plug>(coc-definition)
+nmap <silent> gy <Plug>(coc-type-definition)
+nmap <silent> gi <Plug>(coc-implementation)
+nmap <silent> gr <Plug>(coc-references)
+nnoremap <silent> K :call <SID>show_documentation()<CR>
+
+function! s:show_documentation()
+  if (index(['vim','help'], &filetype) >= 0)
+    execute 'h '.expand('<cword>')
+  else
+    call CocAction('doHover')
+  endif
+endfunction
+
+
+let g:lightline = {
+      \ 'colorscheme': 'wombat',
+      \ }
+
+
+"nvim-treesitter"
+
+lua <<EOF
+require'nvim-treesitter.configs'.setup {
+  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+  highlight = {
+    enable = true,              -- false will disable the whole extension
+    disable = {},  -- list of language that will be disabled
+  },
+}
+EOF
