@@ -17,6 +17,9 @@ set noshowmode
 
 set virtualedit=onemore
 
+"pasteモードから自動的に戻る"
+autocmd InsertLeave * set nopaste
+
 set autoread  "auto-read when editting file is changed
 
 set showcmd  "show command typing now on status area.
@@ -41,6 +44,9 @@ set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
 inoremap <silent> jj <ESC>:<C-u>w<CR>
+inoremap <silent> <C-f> <RIGHT>
+
+nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -51,6 +57,27 @@ inoremap ' ''<LEFT>
 map j gj
 map k gk
 
+" 検索後にジャンプした際に検索単語を画面中央に持ってくる
+nnoremap n nzz
+nnoremap N Nzz
+nnoremap * *zz
+nnoremap # #zz
+nnoremap g* g*zznnoremap g# g#zz
+
+" Ctrl + hjkl でウィンドウ間を移動
+nnoremap <C-h> <C-w>h
+nnoremap <C-j> <C-w>j
+nnoremap <C-k> <C-w>k
+nnoremap <C-l> <C-w>l
+
+" Shift + 矢印でウィンドウサイズを変更
+nnoremap <S-Right>  <C-w><<CR>
+nnoremap <S-Left> <C-w>><CR>
+nnoremap <S-Up>    <C-w>-<CR>
+nnoremap <S-Down>  <C-w>+<CR>
+
+nnoremap <silent> <Leader>e :e<Space>
+
 "---terminal---
 set shell=/bin/zsh
 tnoremap <silent> jj <C-\><C-n>
@@ -60,6 +87,54 @@ let g:mru_buffer = 1
 let g:mru_buffer_prev = 1
 autocmd bufleave * let g:mru_buffer_prev = bufnr()
 
+" Anywhere SID.
+function! s:SID_PREFIX()
+  return matchstr(expand('<sfile>'), '<SNR>\d\+_\zeSID_PREFIX$')
+endfunction
+
+" Set tabline.
+function! s:my_tabline()  "{{{
+  let s = ''
+  for i in range(1, tabpagenr('$'))
+    let bufnrs = tabpagebuflist(i)
+    let bufnr = bufnrs[tabpagewinnr(i) - 1]  " first window, first appears
+    let no = i  " display 0-origin tabpagenr.
+    let mod = getbufvar(bufnr, '&modified') ? '!' : ' '
+    let title = fnamemodify(bufname(bufnr), ':t')
+    let title = '[' . title . ']'
+    let s .= '%'.i.'T'
+    let s .= '%#' . (i == tabpagenr() ? 'TabLineSel' : 'TabLine') . '#'
+    let s .= no . ':' . title
+    let s .= mod
+    let s .= '%#TabLineFill# '
+  endfor
+  let s .= '%#TabLineFill#%T%=%#TabLine#'
+  return s
+endfunction "}}}
+let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
+set showtabline=2 " 常にタブラインを表示
+
+" The prefix key.
+nnoremap    [Tag]   <Nop>
+nmap    t [Tag]
+" Tab jump
+for n in range(1, 9)
+  execute 'nnoremap <silent> [Tag]'.n  ':<C-u>tabnext'.n.'<CR>'
+endfor
+" t1 で1番左のタブ、t2 で1番左から2番目のタブにジャンプ
+
+map <silent> [Tag]c :tablast <bar> tabnew<CR>
+" tc 新しいタブを一番右に作る
+map <silent> [Tag]x :tabclose<CR>
+" tx タブを閉じる
+map <silent> [Tag]n :tabnext<CR>
+" tn 次のタブ
+map <silent> [Tag]p :tabprevious<CR>
+" tp 前のタブ
+
+
+
+"terminal"
 function! IsTerminal(buf_num) abort
   let l:term_buf = bufnr("terminal.buffer")
   if a:buf_num == term_buf
@@ -167,6 +242,10 @@ call dein#add('airblade/vim-gitgutter')
 call dein#add('nvim-treesitter/nvim-treesitter', {'hook_post_update': 'TSUpdate'})
 "コメントアウト"
 call dein#add('tpope/vim-commentary')
+
+call dein#add('42Paris/42header')
+
+call dein#add('wakatime/vim-wakatime')
 
 ""call dein#add('')
 
@@ -296,10 +375,22 @@ function! s:show_documentation()
   endif
 endfunction
 
+let g:user42 = 'rsudo'
+let g:mail42 = 'rsudo@student.42tokyo.jp'
+
 
 let g:lightline = {
-      \ 'colorscheme': 'wombat',
-      \ }
+	\ 'colorscheme': 'wombat',
+	\ 'active': {
+	\ 	'left': [ [ 'mode', 'paste' ],
+	\ 			[ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
+	\ },
+	\ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+	\ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+	\ 'component_function': {
+	\ 	'gitbranch': 'FugitiveHead'
+	\ },
+	\ }
 
 
 "nvim-treesitter"
