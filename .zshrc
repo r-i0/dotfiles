@@ -88,6 +88,18 @@ source $ZSH/oh-my-zsh.sh
 
 # export MANPATH="/usr/local/man:$MANPATH"
 
+man() {
+        env \
+                LESS_TERMCAP_mb=$(printf "\e[1;33m") \
+                LESS_TERMCAP_md=$(printf "\e[1;33m") \
+                LESS_TERMCAP_me=$(printf "\e[0m") \
+                LESS_TERMCAP_se=$(printf "\e[0m") \
+                LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+                LESS_TERMCAP_ue=$(printf "\e[0m") \
+                LESS_TERMCAP_us=$(printf "\e[1;32m") \
+                man "$@"
+}
+
 # You may need to manually set your language environment
 export LANG=en_US.UTF-8
 
@@ -113,6 +125,13 @@ alias c="clear"
 alias gitsb="git status -sb"
 alias gitlog='git log --all --graph --pretty=format:"%Cred%h%Creset %C(bold blue)%an%Creset :%C(yellow)%d%Creset %s %Cgreen(%cr) %Creset" --abbrev-commit'
 alias openwid='open /Users/sudourio/Library/Application\ Support/Übersicht/widgets'
+alias szsh="source ~/.zshrc"
+alias syabai="source ~/.yabairc"
+alias snvim="source ~/.config/nvim/init.vim"
+
+function nv() {
+	nvim $1
+}
 
 function mdview() {
 	markdown $1 | lynx -stdin
@@ -128,7 +147,7 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 [[ ! -f ~/.p10k.zsh ]] || source ~/.p10k.zsh
 
 export PATH="/usr/local/opt/llvm/bin:$PATH"
-
+export PATH="/Users/sudourio/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
