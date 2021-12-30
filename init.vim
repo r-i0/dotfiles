@@ -43,10 +43,8 @@ set shiftwidth=4
 set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
-inoremap <silent> jj <ESC>:<C-u>w<CR>
+inoremap <silent> jj <ESC>:<C-u>w<CR>:<C-u>noh<CR>
 inoremap <silent> <C-f> <RIGHT>
-
-nmap <silent> <Esc><Esc> :nohlsearch<CR>
 
 inoremap { {}<LEFT>
 inoremap [ []<LEFT>
@@ -57,7 +55,7 @@ inoremap ' ''<LEFT>
 map j gj
 map k gk
 
-" 検索後にジャンプした際に検索単語を画面中央に持ってくる
+" 検索後にジャンプしたときzz
 nnoremap n nzz
 nnoremap N Nzz
 nnoremap * *zz
@@ -65,10 +63,10 @@ nnoremap # #zz
 nnoremap g* g*zznnoremap g# g#zz
 
 " Ctrl + hjkl でウィンドウ間を移動
-nnoremap <C-h> <C-w>h
-nnoremap <C-j> <C-w>j
-nnoremap <C-k> <C-w>k
-nnoremap <C-l> <C-w>l
+" nnoremap <C-h> <C-w>h
+" nnoremap <C-j> <C-w>j
+" nnoremap <C-k> <C-w>k
+" nnoremap <C-l> <C-w>l
 
 " Shift + 矢印でウィンドウサイズを変更
 nnoremap <S-Right>  <C-w><<CR>
@@ -77,6 +75,9 @@ nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
 nnoremap <silent> <Leader>e :e<Space>
+
+vnoremap > >gv
+vnoremap < <gv
 
 "---terminal---
 set shell=/bin/zsh
@@ -93,7 +94,7 @@ function! s:SID_PREFIX()
 endfunction
 
 " Set tabline.
-function! s:my_tabline()  "{{{
+function! s:my_tabline()
   let s = ''
   for i in range(1, tabpagenr('$'))
     let bufnrs = tabpagebuflist(i)
@@ -110,7 +111,7 @@ function! s:my_tabline()  "{{{
   endfor
   let s .= '%#TabLineFill#%T%=%#TabLine#'
   return s
-endfunction "}}}
+endfunction
 let &tabline = '%!'. s:SID_PREFIX() . 'my_tabline()'
 set showtabline=2 " 常にタブラインを表示
 
@@ -221,8 +222,10 @@ call dein#add('Shougo/neosnippet-snippets')
 call dein#add('morhetz/gruvbox')
 "構文チェックを行う。
 ""call dein#add('scrooloose/syntastic')
-"() 色付け:
-call dein#add('itchyny/lightline.vim')
+" call dein#add('itchyny/lightline.vim')
+call dein#add('vim-airline/vim-airline')
+call dein#add('vim-airline/vim-airline-themes')
+
 "tree
 call dein#add('preservim/nerdtree')
 call dein#add('ryanoasis/vim-devicons')
@@ -247,6 +250,9 @@ call dein#add('42Paris/42header')
 
 call dein#add('wakatime/vim-wakatime')
 
+call dein#add('vim-operator-user')
+call dein#add('rhysd/vim-clang-format')
+
 ""call dein#add('')
 
 " Required:
@@ -260,6 +266,8 @@ syntax enable
 if dein#check_install()
   call dein#install()
 endif
+
+let g:dein#auto_recache = 1
 
 "End dein Scripts-------------------------
 
@@ -322,9 +330,8 @@ colorscheme gruvbox
 let g:neoterm_default_mod='belowright'
 let g:neoterm_autoscroll=1
 
-"かっこ色"
-let g:rainbow#max_level = 16
-let g:rainbow#pairs = [['(', ')'], ['[', ']']]
+highlight CocErrorSign ctermfg=15 ctermbg=196
+highlight CocWarningSign ctermfg=0 ctermbg=172
 
 "fzf keymap"
 noremap <fzf-p> <Nop>
@@ -378,20 +385,36 @@ endfunction
 let g:user42 = 'rsudo'
 let g:mail42 = 'rsudo@student.42tokyo.jp'
 
+let g:airline_theme='tomorrow'
+let g:airline_powerline_fonts = 1
 
-let g:lightline = {
-	\ 'colorscheme': 'wombat',
-	\ 'active': {
-	\ 	'left': [ [ 'mode', 'paste' ],
-	\ 			[ 'gitbranch', 'readonly', 'filename', 'modified' ] ]
-	\ },
-	\ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
-	\ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
-	\ 'component_function': {
-	\ 	'gitbranch': 'FugitiveHead'
-	\ },
-	\ }
 
+" let g:lightline = {
+" 	\ 'colorscheme': 'wombat',
+" 	\ 'active': {
+" 	\ 	'left': [ [ 'mode', 'paste' ],
+" 	\ 			[ 'fugitive', 'filename' ] ]
+" 	\ },
+" 	\ 'component': {
+" 	\ 	'lineinfo': ' %3l:%-2v',
+" 	\ },
+" 	\ 'component_function': {
+" 	\ 	'fugitive': 'MyFugitive',
+" 	\ 	'gitbranch': 'fugitive#head',
+" 	\ },
+" 	\ 'separator': { 'left': "\ue0b0", 'right': "\ue0b2" },
+" 	\ 'subseparator': { 'left': "\ue0b1", 'right': "\ue0b3" },
+" 	\ }
+
+" function! MyFugitive()
+"   try
+"     if &ft !~? 'vimfiler\|gundo' && exists('*fugitive#head') && strlen(fugitive#head())
+"       return ' ' . fugitive#head()
+"     endif
+"   catch
+"   endtry
+"   return ''
+" endfunction
 
 "nvim-treesitter"
 
@@ -399,7 +422,7 @@ lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
   highlight = {
-    enable = true,              -- false will disable the whole extension
+    enable = true, -- false will disable the whole extension
     disable = {},  -- list of language that will be disabled
   },
 }

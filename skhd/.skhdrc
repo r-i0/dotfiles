@@ -1,3 +1,5 @@
+# open terminal
+shift + cmd - t : open -n /Applications/Alacritty.app
 
 # focus window
 # alt - x : yabai -m window --focus recent

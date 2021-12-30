@@ -89,15 +89,15 @@ source $ZSH/oh-my-zsh.sh
 # export MANPATH="/usr/local/man:$MANPATH"
 
 man() {
-        env \
-                LESS_TERMCAP_mb=$(printf "\e[1;33m") \
-                LESS_TERMCAP_md=$(printf "\e[1;33m") \
-                LESS_TERMCAP_me=$(printf "\e[0m") \
-                LESS_TERMCAP_se=$(printf "\e[0m") \
-                LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
-                LESS_TERMCAP_ue=$(printf "\e[0m") \
-                LESS_TERMCAP_us=$(printf "\e[1;32m") \
-                man "$@"
+		env \
+			LESS_TERMCAP_mb=$(printf "\e[1;33m") \
+			LESS_TERMCAP_md=$(printf "\e[1;33m") \
+			LESS_TERMCAP_me=$(printf "\e[0m") \
+			LESS_TERMCAP_se=$(printf "\e[0m") \
+			LESS_TERMCAP_so=$(printf "\e[1;44;33m") \
+			LESS_TERMCAP_ue=$(printf "\e[0m") \
+			LESS_TERMCAP_us=$(printf "\e[1;32m") \
+			man "$@"
 }
 
 # You may need to manually set your language environment
@@ -127,7 +127,7 @@ alias gitlog='git log --all --graph --pretty=format:"%Cred%h%Creset %C(bold blue
 alias openwid='open /Users/sudourio/Library/Application\ Support/Übersicht/widgets'
 alias szsh="source ~/.zshrc"
 alias syabai="source ~/.yabairc"
-alias snvim="source ~/.config/nvim/init.vim"
+alias e="exa --icons"
 
 function nv() {
 	nvim $1
@@ -136,6 +136,22 @@ function nv() {
 function mdview() {
 	markdown $1 | lynx -stdin
 }
+
+# z
+. `brew --prefix`/etc/profile.d/z.sh
+
+zfzf() {
+    local res=$(z | sort -rn | cut -c 12- | fzf)
+    if [ -n "$res" ]; then
+        BUFFER+="cd $res"
+        zle accept-line
+    else
+        return 1
+    fi
+}
+
+zle -N zfzf
+bindkey '^f' zfzf
 
 
 setopt no_beep
@@ -149,5 +165,20 @@ source ~/powerlevel10k/powerlevel10k.zsh-theme
 export PATH="/usr/local/opt/llvm/bin:$PATH"
 export PATH="/Users/sudourio/bin:$PATH"
 export PATH="$HOME/.yarn/bin:$HOME/.config/yarn/global/node_modules/.bin:$PATH"
+export PATH="/usr/local/go/bin:$PATH"
+export PATH="/usr/local/opt/qt@5/bin:$PATH"
+export GOENV_ROOT="$HOME/.goenv"
+export PATH="$GOENV_ROOT/bin:$PATH"
+export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
+export PATH="$GOPATH/bin:$PATH"
+eval "$(goenv init -)"
+eval "$(gh completion -s zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
+export PATH="/usr/local/opt/libpq/bin:$PATH"
+
+# Go completion
+
+if [ -f $GOROOT/misc/zsh/go ]; then
+    source $GOROOT/misc/zsh/go
+fi
