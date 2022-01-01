@@ -66,12 +66,8 @@ call dein#add('Shougo/neosnippet-snippets')
 ""call dein#add('Shougo/deoplete.nvim')
 ""call dein#add('zchee/deoplete-clang')
 "theme
-"call dein#add('projekt0n/github-nvim-theme')
-""call dein#add('ful1e5/onedark.nvim')
 call dein#add('morhetz/gruvbox')
 "構文チェックを行う。
-""call dein#add('scrooloose/syntastic')
-" call dein#add('itchyny/lightline.vim')
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 
@@ -102,6 +98,9 @@ call dein#add('wakatime/vim-wakatime')
 call dein#add('vim-operator-user')
 call dein#add('rhysd/vim-clang-format')
 
+call dein#add('glepnir/dashboard-nvim')
+call dein#add('liuchengxu/vim-clap')
+
 ""call dein#add('')
 
 " Required:
@@ -119,35 +118,21 @@ endif
 let g:dein#auto_recache = 1
 
 "End dein Scripts-------------------------
-nnoremap <silent> <C-e> :NERDTreeToggle<CR>
+"
+"dashboard
 
-" 表示幅
-let g:NERDTreeWinSize=30
-
-" ブックマークを表示
-let g:NERDTreeShowBookmarks=1
-
-" 親ディレクトリへ移動
-let g:NERDTreeMapUpdir=''
-
-" ファイルの開き方
-let g:NERDTree='<C-t>'
-let g:NERDTreeMapOpenVSplit='<C-l>'
-
-" ファイルを開いたらNERDTreeを閉じる
-let g:NERDTreeQuitOnOpen=1
-
-" 隠しファイルを表示
-let g:NERDTreeShowHidden=1
-
-" 非表示ファイル
-let g:NERDTreeIgnore=['\.git$', '\.clean$', '\.swp$', '\.bak$', '\~$']
-
-" NERDTreeを同時に閉じる
-autocmd bufenter * if (winnr('$') == 1 && exists('b:NERDTree') && b:NERDTree.isTabTree()) | q | endif
+let g:mapleader="\<Space>"
+let g:dashboard_default_executive ='fzf'
+nmap <Leader>ss :<C-u>SessionSave<CR>
+nmap <Leader>sl :<C-u>SessionLoad<CR>
+nnoremap <silent> <Leader>fh :DashboardFindHistory<CR>
+nnoremap <silent> <Leader>ff :DashboardFindFile<CR>
+nnoremap <silent> <Leader>tc :DashboardChangeColorscheme<CR>
+nnoremap <silent> <Leader>fa :DashboardFindWord<CR>
+nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
+nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 
 " Load the colorscheme
-""colorscheme onedark
 colorscheme gruvbox
 
 "透明
@@ -157,9 +142,7 @@ highlight LineNr ctermbg=NONE guibg=NONE
 highlight Folded ctermbg=NONE guibg=NONE
 highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
-highlight CocErrorSign ctermfg=15 ctermbg=196
-highlight CocWarningSign ctermfg=0 ctermbg=172
-
+runtime configs/nerdtree.vim
 runtime configs/coc.vim
 
 let g:user42 = 'rsudo'
