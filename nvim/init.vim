@@ -180,10 +180,26 @@ runtime configs/coc.vim
 let g:user42 = 'rsudo'
 let g:mail42 = 'rsudo@student.42tokyo.jp'
 
-let g:airline_theme='tomorrow'
+if !exists('g:airline_symbols')
+	let g:airline_symbols = {}
+endif
+""luna,distingished, angr
+let g:airline_theme='angr'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
-let g:airline_theme = 'gruvbox'
+let g:airline#extensions#tabline#buffer_idx_mode = 1
+let g:airline#extensions#tabline#buffer_idx_format = {
+	\ '0': '0 ',
+	\ '1': '1 ',
+	\ '2': '2 ',
+	\ '3': '3 ',
+	\ '4': '4 ',
+	\ '5': '5 ',
+	\ '6': '6 ',
+	\ '7': '7 ',
+	\ '8': '8 ',
+	\ '9': '9 '
+	\}
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
