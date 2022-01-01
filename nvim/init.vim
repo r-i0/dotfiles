@@ -182,6 +182,8 @@ let g:mail42 = 'rsudo@student.42tokyo.jp'
 
 let g:airline_theme='tomorrow'
 let g:airline_powerline_fonts = 1
+let g:airline#extensions#tabline#enabled = 1
+let g:airline_theme = 'gruvbox'
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
