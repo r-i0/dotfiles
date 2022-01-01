@@ -35,49 +35,13 @@ set ignorecase
 set wrapscan
 
 ""set pumblend=10
-
 set tabstop=4
 set shiftwidth=4
 
 set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
-inoremap <silent> jj <ESC>:<C-u>w<CR>:<C-u>noh<CR>
-inoremap <silent> <C-f> <RIGHT>
-
-inoremap { {}<LEFT>
-inoremap [ []<LEFT>
-inoremap ( ()<LEFT>
-inoremap " ""<LEFT>
-inoremap ' ''<LEFT>
-
-map j gj
-map k gk
-
-" 検索後にジャンプしたときzz
-nnoremap n nzz
-nnoremap N Nzz
-nnoremap * *zz
-nnoremap # #zz
-nnoremap g* g*zznnoremap g# g#zz
-
-" Ctrl + hjkl でウィンドウ間を移動
-" nnoremap <C-h> <C-w>h
-" nnoremap <C-j> <C-w>j
-" nnoremap <C-k> <C-w>k
-" nnoremap <C-l> <C-w>l
-
-" Shift + 矢印でウィンドウサイズを変更
-nnoremap <S-Right>  <C-w><<CR>
-nnoremap <S-Left> <C-w>><CR>
-nnoremap <S-Up>    <C-w>-<CR>
-nnoremap <S-Down>  <C-w>+<CR>
-
-nnoremap <silent> <Leader>e :e<Space>
-
-vnoremap > >gv
-vnoremap < <gv
-
+runtime configs/keymap.vim
 runtime configs/terminal.vim
 runtime configs/tabline.vim
 
@@ -155,11 +119,6 @@ endif
 let g:dein#auto_recache = 1
 
 "End dein Scripts-------------------------
-
-let g:molokai_original = 1
-let g:deoplete#sources#clang#libclang_path = '/usr/lib/llvm-3.8/lib/libclang-3.8.so.1'
-let g:deoplete#sources#clang#clang_header = '/usr/include/clang'
-
 nnoremap <silent> <C-e> :NERDTreeToggle<CR>
 
 " 表示幅
