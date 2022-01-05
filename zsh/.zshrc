@@ -135,7 +135,6 @@ export LANG=en_US.UTF-8
 # alias zshconfig="mate ~/.zshrc"
 # alias ohmyzsh="mate ~/.oh-my-zsh"
 alias c="clear"
-alias gitsb="git status -sb"
 alias gitlog='git log --all --graph --pretty=format:"%Cred%h%Creset %C(bold blue)%an%Creset :%C(yellow)%d%Creset %s %Cgreen(%cr) %Creset" --abbrev-commit'
 alias openwid='open /Users/sudourio/Library/Application\ Support/Übersicht/widgets'
 alias szsh="source ~/.zshrc"
