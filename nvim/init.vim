@@ -41,6 +41,8 @@ set shiftwidth=4
 set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
 
+set scrolloff=5
+
 runtime configs/keymap.vim
 runtime configs/terminal.vim
 runtime configs/tabline.vim
@@ -99,7 +101,8 @@ call dein#add('vim-operator-user')
 call dein#add('rhysd/vim-clang-format')
 
 call dein#add('glepnir/dashboard-nvim')
-call dein#add('liuchengxu/vim-clap')
+call dein#add('easymotion/vim-easymotion')
+call dein#add('osyo-manga/vim-anzu')
 
 ""call dein#add('')
 
@@ -201,6 +204,26 @@ let g:airline#extensions#tabline#buffer_idx_format = {
 	\ '9': '9 '
 	\}
 
+
+map <Leader> <Plug>(easymotion-prefix)
+let g:EasyMotion_do_mapping = 0 " Disable default mappings
+
+" Jump to anywhere you want with minimal keystrokes, with just one key binding.
+" `s{char}{label}`
+" nmap s <Plug>(easymotion-overwin-f)
+" or
+" `s{char}{char}{label}`
+" Need one more keystroke, but on average, it may be more comfortable.
+nmap s <Plug>(easymotion-overwin-f2)
+
+" Turn on case insensitive feature
+let g:EasyMotion_smartcase = 1
+
+" JK motions: Line motions
+map <Leader>j <Plug>(easymotion-j)
+map <Leader>k <Plug>(easymotion-k)
+
+
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
   ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
@@ -210,3 +233,70 @@ require'nvim-treesitter.configs'.setup {
   },
 }
 EOF
+
+nmap <C-i> :!goimports -w % <CR>
+
+augroup highlight_yank
+    autocmd!
+    au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
+augroup END
+
+"vim-anzu
+" mapping
+nmap n <Plug>(anzu-n-with-echo)
+nmap N <Plug>(anzu-N-with-echo)
+nmap * <Plug>(anzu-star-with-echo)
+nmap # <Plug>(anzu-sharp-with-echo)
+
+" clear status
+nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
+
+" statusline
+set statusline=%{anzu#search_status()}
+
+
+"----------------------------------------------------
+" Insert include guard to the current file
+"----------------------------------------------------
+command!  -nargs=0 IncGuard call IncludeGuard()
+function! IncludeGuard()
+    "カレントファイル名を取得
+    let name = fnamemodify(expand('%'),':t')
+
+    "大文字にする
+    let name = toupper(name)
+
+    "がーど
+    let included = substitute(name,'\.','_','g')
+    "書き込み
+    let res_head = '#ifndef '.included."\n#define ".included."\n\n"
+    let res_foot = "\n".'#endif //'.included
+    silent! execute '1s/^/\=res_head'
+    silent! execute '$s/$/\=res_foot'
+endfunction
+
+" Plugin key-mappings.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+imap <C-k>     <Plug>(neosnippet_expand_or_jump)
+smap <C-k>     <Plug>(neosnippet_expand_or_jump)
+xmap <C-k>     <Plug>(neosnippet_expand_target)
+
+" SuperTab like snippets behavior.
+" Note: It must be "imap" and "smap".  It uses <Plug> mappings.
+"imap <expr><TAB>
+" \ pumvisible() ? "\<C-n>" :
+" \ neosnippet#expandable_or_jumpable() ?
+" \    "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+smap <expr><TAB> neosnippet#expandable_or_jumpable() ?
+\ "\<Plug>(neosnippet_expand_or_jump)" : "\<TAB>"
+
+" For conceal markers.
+if has('conceal')
+  set conceallevel=2 concealcursor=niv
+endif
+
+"syn keyword 要素名 要素 要素.. 
+"TODOおよびBUGを指定の文字色に変更 
+syn keyword todo TODO
+highlight todo cterm=reverse ctermfg=214 ctermbg=235 gui=reverse guifg=#fabd2f guibg=#282828
+
