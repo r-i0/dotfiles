@@ -40,6 +40,8 @@ set shiftwidth=4
 
 set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
+hi NonText guibg=NONE guifg=DarkGreen
+hi SpecialKey guibg=NONE guifg=darkmagenta
 
 set scrolloff=5
 
@@ -170,13 +172,6 @@ let g:dashboard_custom_header = [
 " Load the colorscheme
 colorscheme gruvbox
 
-"透明
-highlight Normal ctermbg=NONE guibg=NONE
-highlight NonText ctermbg=NONE guibg=NONE
-highlight LineNr ctermbg=NONE guibg=NONE
-highlight Folded ctermbg=NONE guibg=NONE
-highlight EndOfBuffer ctermbg=NONE guibg=NONE
-
 runtime configs/nerdtree.vim
 runtime configs/coc.vim
 
@@ -295,8 +290,13 @@ if has('conceal')
   set conceallevel=2 concealcursor=niv
 endif
 
+let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
+
 "syn keyword 要素名 要素 要素.. 
 "TODOおよびBUGを指定の文字色に変更 
 syn keyword todo TODO
 highlight todo cterm=reverse ctermfg=214 ctermbg=235 gui=reverse guifg=#fabd2f guibg=#282828
+
+"gitgutter
+set updatetime=250
 
