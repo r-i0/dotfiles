@@ -1,16 +1,8 @@
 GREEN='\033[32m'
 RESET='\033[39m'
 echo $GREEN
-echo ' ▄▄▄       ██▓    ▄▄▄       ▄████▄   ██▀███   ██▓▄▄▄█████▓▄▄▄█████▓▓██   ██▓   '
-echo '▒████▄    ▓██▒   ▒████▄    ▒██▀ ▀█  ▓██ ▒ ██▒▓██▒▓  ██▒ ▓▒▓  ██▒ ▓▒ ▒██  ██▒   '
-echo '▒██  ▀█▄  ▒██░   ▒██  ▀█▄  ▒▓█    ▄ ▓██ ░▄█ ▒▒██▒▒ ▓██░ ▒░▒ ▓██░ ▒░  ▒██ ██░   '
-echo '░██▄▄▄▄██ ▒██░   ░██▄▄▄▄██ ▒▓▓▄ ▄██▒▒██▀▀█▄  ░██░░ ▓██▓ ░ ░ ▓██▓ ░   ░ ▐██▓░   '
-echo ' ▓█   ▓██▒░██████▒▓█   ▓██▒▒ ▓███▀ ░░██▓ ▒██▒░██░  ▒██▒ ░   ▒██▒ ░   ░ ██▒▓░   '
-echo ' ▒▒   ▓▒█░░ ▒░▓  ░▒▒   ▓▒█░░ ░▒ ▒  ░░ ▒▓ ░▒▓░░▓    ▒ ░░     ▒ ░░      ██▒▒▒    '
-echo '  ▒   ▒▒ ░░ ░ ▒  ░ ▒   ▒▒ ░  ░  ▒     ░▒ ░ ▒░ ▒ ░    ░        ░     ▓██ ░▒░    '
-echo '  ░   ▒     ░ ░    ░   ▒   ░          ░░   ░  ▒ ░  ░        ░       ▒ ▒ ░░     '
-echo '      ░  ░    ░  ░     ░  ░░ ░         ░      ░                     ░ ░        '
-echo '                           ░                                        ░ ░        '
+cowsay -f $(ls /usr/local/Cellar/cowsay/3.04_1/share/cows | grep .cow | gshuf -n 1) `fortune`
+
 echo $RESET
 
 # Enale Powerlevel10k instant prompt. Should stay close to the top of ~/.zshrc.
@@ -141,6 +133,10 @@ alias szsh="source ~/.zshrc"
 alias syabai="source ~/.yabairc"
 alias e="exa --icons"
 
+function delete-merged-branch() {
+	git checkout $1; git branch --merged|egrep -v '\*|develop|main'|xargs git branch -d;
+}
+
 function nv() {
 	nvim $1
 }
@@ -183,11 +179,13 @@ export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
+export PATH="/Users/sudourio/Library/Python/3.9/bin:$PATH"
 eval "$(goenv init -)"
 eval "$(gh completion -s zsh)"
 
 [ -f ~/.fzf.zsh ] && source ~/.fzf.zsh
 export PATH="/usr/local/opt/libpq/bin:$PATH"
+
 
 # Go completion
 
