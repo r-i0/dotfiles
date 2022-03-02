@@ -16,6 +16,7 @@ set noswapfile
 set noshowmode
 
 set virtualedit=onemore
+set backspace=indent,eol,start
 
 "pasteモードから自動的に戻る"
 autocmd InsertLeave * set nopaste
@@ -221,11 +222,13 @@ map <Leader>k <Plug>(easymotion-k)
 
 lua <<EOF
 require'nvim-treesitter.configs'.setup {
-  ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
-  highlight = {
-    enable = true, -- false will disable the whole extension
-    disable = {},  -- list of language that will be disabled
-  },
+ensure_installed = "maintained", -- one of "all", "maintained" (parsers with maintainers), or a list of languages
+highlight = {
+enable = true, -- false will disable the whole extension
+disable = {
+	'html'
+	},  -- list of language that will be disabled
+},
 }
 EOF
 
@@ -293,10 +296,13 @@ endif
 let g:neosnippet#snippets_directory = '~/.config/nvim/snippets/'
 
 "syn keyword 要素名 要素 要素.. 
-"TODOおよびBUGを指定の文字色に変更 
+"TODOを指定の文字色に変更 
 syn keyword todo TODO
 highlight todo cterm=reverse ctermfg=214 ctermbg=235 gui=reverse guifg=#fabd2f guibg=#282828
 
 "gitgutter
 set updatetime=250
+
+let g:python_host_prog="/usr/bin/python2.7"
+" let g:python3_host_prog="/usr/local/bin/python3"
 

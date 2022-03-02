@@ -1,6 +1,6 @@
 inoremap <silent> jj <ESC>:<C-u>w<CR>:<C-u>noh<CR>
 inoremap <silent> <C-f> <RIGHT>
-inoremap <silent> <C-a> <LEFT>
+inoremap <silent> <C-s> <LEFT>
 
 map j gj
 map k gk
