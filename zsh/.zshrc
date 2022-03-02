@@ -132,6 +132,7 @@ alias openwid='open /Users/sudourio/Library/Application\ Support/Übersicht/widg
 alias szsh="source ~/.zshrc"
 alias syabai="source ~/.yabairc"
 alias e="exa --icons"
+alias tre="e -T"
 
 function delete-merged-branch() {
 	git checkout $1; git branch --merged|egrep -v '\*|develop|main'|xargs git branch -d;
@@ -179,7 +180,12 @@ export GOENV_ROOT="$HOME/.goenv"
 export PATH="$GOENV_ROOT/bin:$PATH"
 export PATH="/Applications/Postgres.app/Contents/Versions/9.6/bin:$PATH"
 export PATH="$GOPATH/bin:$PATH"
-export PATH="/Users/sudourio/Library/Python/3.9/bin:$PATH"
+# export PATH="/Users/sudourio/Library/Python/3.9/bin:$PATH"
+
+export NVIM_PYTHON_LOG_FILE="$HOME/.config/nvim/log/"
+export PYTHONPATH="/Applications/Xcode.app/Contents/SharedFrameworks/LLDB.framework/Resources/Python:$PYTHONPATH"
+export PYTHONPATH="/Users/sudourio/Library/Python/2.7/lib/python/site-packages:$PYTHONPATH"
+
 eval "$(goenv init -)"
 eval "$(gh completion -s zsh)"
 
