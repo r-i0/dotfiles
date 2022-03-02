@@ -1,5 +1,6 @@
 #!/usr/bin/env sh
 
+echo "yabai configuration loading.."
 sudo yabai --load-sa
 # global settings
 yabai -m config mouse_follows_focus          on
@@ -32,4 +33,14 @@ yabai -m config window_gap                   06
 
 # restore position of floating windows when they are manually unfloated
 # ~/Scripts/yabai_restore.sh
-echo "yabai configuration loaded.."
+
+CIAN='\033[36m'
+RESET='\033[39m'
+echo -e $CIAN \
+" ▄▀▀▄ ▀▀▄  ▄▀▀█▄   ▄▀▀█▄▄   ▄▀▀█▄   ▄▀▀█▀▄   
+█   ▀▄ ▄▀ ▐ ▄▀ ▀▄ ▐ ▄▀   █ ▐ ▄▀ ▀▄ █   █  █  
+▐     █     █▄▄▄█   █▄▄▄▀    █▄▄▄█ ▐   █  ▐  
+      █    ▄▀   █   █   █   ▄▀   █     █     
+    ▄▀    █   ▄▀   ▄▀▄▄▄▀  █   ▄▀   ▄▀▀▀▀▀▄  
+    █     ▐   ▐   █    ▐   ▐   ▐   █       █ 
+    ▐             ▐                ▐       ▐ " $RESET
