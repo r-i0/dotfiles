@@ -1,6 +1,6 @@
 inoremap <silent> jj <ESC>:<C-u>w<CR>:<C-u>noh<CR>
 inoremap <silent> <C-f> <RIGHT>
-inoremap <silent> <C-s> <LEFT>
+inoremap <silent> <C-b> <LEFT>
 
 map j gj
 map k gk
@@ -23,6 +23,10 @@ nnoremap <silent> <Leader>e :e<Space>
 
 vnoremap > >gv
 vnoremap < <gv
+
+vnoremap <silent> y y`]
+vnoremap <silent> p p`]
+nnoremap <silent> p p`]
 
 nnoremap <silent> <Space><Space> "zyiw:let @/ = '\<' . @z . '\>'<CR>:set hlsearch<CR>
 nmap <C-f> <Space><Space>:%s/<C-r>///gc<Left><Left><Left>
