@@ -36,8 +36,8 @@ set ignorecase
 set wrapscan
 
 ""set pumblend=10
-set tabstop=4
-set shiftwidth=4
+set tabstop=2
+set shiftwidth=2
 
 set list
 set listchars=tab:\▸\ ,trail:-,eol:↲,extends:»,precedes:«,nbsp:%
@@ -68,11 +68,13 @@ call dein#add('/Users/sudourio/.cache/dein/repos/github.com/Shougo/dein.vim')
 " Add or remove your plugins here like this:
 call dein#add('Shougo/neosnippet.vim')
 call dein#add('Shougo/neosnippet-snippets')
-""call dein#add('Shougo/deoplete.nvim')
-""call dein#add('zchee/deoplete-clang')
+
 "theme
 call dein#add('morhetz/gruvbox')
-"構文チェックを行う。
+call dein#add('mhartington/oceanic-next')
+call dein#add('pappasam/papercolor-theme-slim')
+call dein#add('rebelot/kanagawa.nvim')
+
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
 
@@ -106,6 +108,7 @@ call dein#add('rhysd/vim-clang-format')
 call dein#add('glepnir/dashboard-nvim')
 call dein#add('easymotion/vim-easymotion')
 call dein#add('osyo-manga/vim-anzu')
+call dein#add('bronson/vim-trailing-whitespace')
 
 ""call dein#add('')
 
@@ -140,20 +143,19 @@ nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
 nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 
 let g:dashboard_custom_header = [
-			\ '                                             ▟▙            ',
-			\ '                                             ▝▘            ',
+			\ '                                             ▟▙',
+			\ '                                             ▝▘',
 			\ '     ██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖',
 			\ '     ██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██',
 			\ '     ██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██',
 			\ '     ██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██',
 			\ '     ▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀',
-			\ '',
 			\"                         ;::::;",
 			\"                       ;::::; :;",
 			\"                     ;:::::'   :;",
 			\"                    ;:::::;     ;.",
-			\"                   ,:::::'       ;           OOO\ ",
-			\"                   ::::::;       ;          OOOOO\ ",
+			\"                   ,:::::'       ;           OOO",
+			\"                   ::::::;       ;          OOOOO",
 			\"                   ;:::::;       ;         OOOOOOOO",
 			\"                  ,;::::::;     ;'         / OOOOOOO",
 			\"                ;:::::::::`. ,,,;.        /  / DOOOOOO",
@@ -170,8 +172,13 @@ let g:dashboard_custom_header = [
 			\"               ::::::`:::::;'  /  /   `#",
 			\]
 
+if (has("termguicolors"))
+ set termguicolors
+endif
+
+
 " Load the colorscheme
-colorscheme gruvbox
+colorscheme kanagawa
 
 runtime configs/nerdtree.vim
 runtime configs/coc.vim
@@ -306,3 +313,4 @@ set updatetime=250
 let g:python_host_prog="/usr/bin/python2.7"
 " let g:python3_host_prog="/usr/local/bin/python3"
 
+let g:neovide_cursor_vfx_mode = "pixiedust"
