@@ -1,4 +1,4 @@
-inoremap <silent> jj <ESC>:<C-u>w<CR>:<C-u>noh<CR>
+inoremap <silent> jj <ESC>
 inoremap <silent> <C-f> <RIGHT>
 inoremap <silent> <C-b> <LEFT>
 
@@ -20,6 +20,7 @@ nnoremap <S-Up>    <C-w>-<CR>
 nnoremap <S-Down>  <C-w>+<CR>
 
 nnoremap <silent> <Leader>e :e<Space>
+nnoremap <silent> <Leader>w :w<CR>
 
 vnoremap > >gv
 vnoremap < <gv

@@ -71,12 +71,13 @@ call dein#add('Shougo/neosnippet-snippets')
 
 "theme
 call dein#add('morhetz/gruvbox')
-call dein#add('mhartington/oceanic-next')
 call dein#add('pappasam/papercolor-theme-slim')
 call dein#add('rebelot/kanagawa.nvim')
+call dein#add('sainnhe/everforest')
 
 call dein#add('vim-airline/vim-airline')
 call dein#add('vim-airline/vim-airline-themes')
+call dein#add('ryanoasis/vim-devicons')
 
 "tree
 call dein#add('preservim/nerdtree')
@@ -143,13 +144,13 @@ nnoremap <silent> <Leader>fb :DashboardJumpMark<CR>
 nnoremap <silent> <Leader>cn :DashboardNewFile<CR>
 
 let g:dashboard_custom_header = [
-			\ '                                             ▟▙',
-			\ '                                             ▝▘',
-			\ '     ██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖',
-			\ '     ██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██',
-			\ '     ██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██',
-			\ '     ██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██',
-			\ '     ▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀',
+			\'                                             ▟▙',
+			\'                                             ▝▘',
+			\'     ██▃▅▇█▆▖  ▗▟████▙▖   ▄████▄   ██▄  ▄██  ██  ▗▟█▆▄▄▆█▙▖',
+			\'     ██▛▔ ▝██  ██▄▄▄▄██  ██▛▔▔▜██  ▝██  ██▘  ██  ██▛▜██▛▜██',
+			\'     ██    ██  ██▀▀▀▀▀▘  ██▖  ▗██   ▜█▙▟█▛   ██  ██  ██  ██',
+			\'     ██    ██  ▜█▙▄▄▄▟▊  ▀██▙▟██▀   ▝████▘   ██  ██  ██  ██',
+			\'     ▀▀    ▀▀   ▝▀▀▀▀▀     ▀▀▀▀       ▀▀     ▀▀  ▀▀  ▀▀  ▀▀',
 			\"                         ;::::;",
 			\"                       ;::::; :;",
 			\"                     ;:::::'   :;",
@@ -178,7 +179,13 @@ endif
 
 
 " Load the colorscheme
-colorscheme kanagawa
+colorscheme everforest
+let g:everforest_background = 'soft'
+highlight Normal ctermbg=NONE guibg=NONE
+highlight NonText ctermbg=NONE guibg=NONE
+highlight LineNr ctermbg=NONE guibg=NONE
+highlight Folded ctermbg=NONE guibg=NONE
+highlight EndOfBuffer ctermbg=NONE guibg=NONE
 
 runtime configs/nerdtree.vim
 runtime configs/coc.vim
@@ -190,7 +197,7 @@ if !exists('g:airline_symbols')
 	let g:airline_symbols = {}
 endif
 ""luna,distingished, angr
-let g:airline_theme='angr'
+let g:airline_theme='molokai'
 let g:airline_powerline_fonts = 1
 let g:airline#extensions#tabline#enabled = 1
 let g:airline#extensions#tabline#buffer_idx_mode = 1
@@ -206,6 +213,11 @@ let g:airline#extensions#tabline#buffer_idx_format = {
 	\ '8': '8 ',
 	\ '9': '9 '
 	\}
+
+let g:airline#extensions#default#layout = [
+	\ [ 'a', 'b', 'c' ],
+	\ [ 'error', 'warning']
+	\ ]
 
 
 map <Leader> <Plug>(easymotion-prefix)
@@ -239,8 +251,6 @@ disable = {
 }
 EOF
 
-nmap <C-i> :!goimports -w % <CR>
-
 augroup highlight_yank
     autocmd!
     au TextYankPost * silent! lua vim.highlight.on_yank{higroup="IncSearch", timeout=700}
@@ -259,6 +269,8 @@ nmap <Esc><Esc> <Plug>(anzu-clear-search-status)
 " statusline
 set statusline=%{anzu#search_status()}
 
+
+command! Goimports :!goimports -w .
 
 "----------------------------------------------------
 " Insert include guard to the current file
@@ -312,5 +324,3 @@ set updatetime=250
 
 let g:python_host_prog="/usr/bin/python2.7"
 " let g:python3_host_prog="/usr/local/bin/python3"
-
-let g:neovide_cursor_vfx_mode = "pixiedust"
