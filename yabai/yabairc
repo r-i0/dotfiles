@@ -25,7 +25,7 @@ yabai -m config mouse_action2                resize
 
 # general space settings
 yabai -m config layout                       bsp
-yabai -m config top_padding                  36
+yabai -m config top_padding                  8
 yabai -m config bottom_padding               8
 yabai -m config left_padding                 6
 yabai -m config right_padding                6
@@ -37,10 +37,10 @@ yabai -m config window_gap                   06
 CIAN='\033[36m'
 RESET='\033[39m'
 echo -e $CIAN \
-" ▄▀▀▄ ▀▀▄  ▄▀▀█▄   ▄▀▀█▄▄   ▄▀▀█▄   ▄▀▀█▀▄   
-█   ▀▄ ▄▀ ▐ ▄▀ ▀▄ ▐ ▄▀   █ ▐ ▄▀ ▀▄ █   █  █  
-▐     █     █▄▄▄█   █▄▄▄▀    █▄▄▄█ ▐   █  ▐  
-      █    ▄▀   █   █   █   ▄▀   █     █     
-    ▄▀    █   ▄▀   ▄▀▄▄▄▀  █   ▄▀   ▄▀▀▀▀▀▄  
-    █     ▐   ▐   █    ▐   ▐   ▐   █       █ 
+" ▄▀▀▄ ▀▀▄  ▄▀▀█▄   ▄▀▀█▄▄   ▄▀▀█▄   ▄▀▀█▀▄
+█   ▀▄ ▄▀ ▐ ▄▀ ▀▄ ▐ ▄▀   █ ▐ ▄▀ ▀▄ █   █  █
+▐     █     █▄▄▄█   █▄▄▄▀    █▄▄▄█ ▐   █  ▐
+      █    ▄▀   █   █   █   ▄▀   █     █
+    ▄▀    █   ▄▀   ▄▀▄▄▄▀  █   ▄▀   ▄▀▀▀▀▀▄
+    █     ▐   ▐   █    ▐   ▐   ▐   █       █
     ▐             ▐                ▐       ▐ " $RESET
