@@ -3,14 +3,11 @@
 # z
 . `brew --prefix`/etc/profile.d/z.sh
 
-# シンタックス
-source /Users/sudourio/my_library/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh
-
 alias c="clear"
 alias ls="exa --icons"
 
 # PATH
-export PATH="$PATH:/Users/sudourio/go/bin"
+export PATH="$PATH:/Users/sudorio/go/bin"
 
 # 同じコマンドを履歴に残さない
 setopt HIST_IGNORE_DUPS
@@ -38,12 +35,12 @@ function left-prompt {
   back_color='%{\e[30;48;5;' # set background color
   reset='%{\e[0m%}'   # reset
   sharp='\uE0B0'      # triangle
-  
+
   dir="${back_color}${path_b}${text_color}${path_t}"
   echo "${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}→ ${reset}"
 }
 
-PROMPT=`left-prompt` 
+PROMPT=`left-prompt`
 
 # コマンドの実行ごとに改行
 function precmd() {
@@ -173,8 +170,7 @@ fv() {
   nvim "$file"
 }
 
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc'
-source '/usr/local/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/completion.zsh.inc'
+source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 
 # Fig post block. Keep at the bottom of this file.
 [[ -f "$HOME/.fig/shell/zshrc.post.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.post.zsh"

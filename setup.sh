@@ -29,4 +29,4 @@ ln -is ${PWD}/zsh/zshrc ~/.zshrc
 ln -is ${PWD}/yabai/yabairc ~/.yabairc
 ln -is ${PWD}/yabai/skhdrc ~/.skhdrc
 
-install
+install_brew
