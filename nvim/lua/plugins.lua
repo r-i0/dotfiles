@@ -6,12 +6,20 @@ end
 
 vim.cmd [[packadd packer.nvim]]
 
+packer.init{
+  display = {
+    open_fn = require'packer.util'.float,
+  }
+}
+
 packer.startup(function(use)
   use 'wbthomason/packer.nvim'
 
   -- theme
   use 'ellisonleao/gruvbox.nvim'
   use 'sainnhe/everforest'
+
+  use 'akinsho/toggleterm.nvim' -- terminal
 
   use 'nvim-lualine/lualine.nvim' -- Statusline
   use 'nvim-lua/plenary.nvim' -- Common utilities

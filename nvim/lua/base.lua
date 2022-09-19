@@ -6,8 +6,9 @@ vim.opt.fileencoding = 'utf-8'
 
 vim.wo.number = true
 
-vim.opt.mouse = 'a'
 vim.cmd[[colorscheme gruvbox]]
+
+vim.opt.mouse = 'a'
 vim.opt.clipboard:append { 'unnamedplus' }
 vim.opt.title = true
 vim.opt.autoindent = true
