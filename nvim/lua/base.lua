@@ -6,8 +6,9 @@ vim.opt.fileencoding = 'utf-8'
 
 vim.wo.number = true
 
-vim.cmd[[colorscheme gruvbox]]
+vim.cmd[[colorscheme nordfox]]
 
+vim.opt.swapfile = false
 vim.opt.mouse = 'a'
 vim.opt.clipboard:append { 'unnamedplus' }
 vim.opt.title = true
