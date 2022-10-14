@@ -1,11 +1,15 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
-# z
-. `brew --prefix`/etc/profile.d/z.sh
 
-alias c="clear"
-alias ls="exa --icons"
-alias gitlog='git log --all --graph --pretty=format:"%Cred%h%Creset %C(bold blue)%an%Creset :%C(yellow)%d%Creset %s %Cgreen(%cr) %Creset" --abbrev-commit'
+ZSH_DIR="./zsh"
+if [ -d $ZSH_DIR ] && [ -r $ZSH_DIR ] && [ -x $ZSH_DIR ]; then
+    # zshディレクトリより下にある、.zshファイルの分、繰り返す
+    for file in ${ZSH_DIR}/**/*.zsh; do
+        # 読み取り可能ならば実行する
+        [ -r $file ] && source $file
+    done
+fi
+
 # PATH
 export PATH="$PATH:/Users/sudorio/go/bin"
 
@@ -22,152 +26,6 @@ function code {
         [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
         open -a "Visual Studio Code" "$argPath"
     fi
-}
-
-# プロンプト
-function left-prompt {
-  name_t='179m%}'      # user name text clolr
-  name_b='000m%}'    # user name background color
-  path_t='255m%}'     # path text clolr
-  path_b='031m%}'   # path background color
-  arrow='087m%}'   # arrow color
-  text_color='%{\e[38;5;'    # set text color
-  back_color='%{\e[30;48;5;' # set background color
-  reset='%{\e[0m%}'   # reset
-  sharp='\uE0B0'      # triangle
-
-  dir="${back_color}${path_b}${text_color}${path_t}"
-  echo "${back_color}${path_b}${text_color}${name_b}${sharp} ${dir}%~${reset}${text_color}${path_b}${sharp}${reset}\n${text_color}${arrow}→ ${reset}"
-}
-
-PROMPT=`left-prompt`
-
-# コマンドの実行ごとに改行
-function precmd() {
-    # Print a newline before the prompt, unless it's the
-    # first prompt in the process.
-    if [ -z "$NEW_LINE_BEFORE_PROMPT" ]; then
-        NEW_LINE_BEFORE_PROMPT=1
-    elif [ "$NEW_LINE_BEFORE_PROMPT" -eq 1 ]; then
-        echo ""
-    fi
-}
-
-# git ブランチ名を色付きで表示させるメソッド
-function rprompt-git-current-branch {
-  local branch_name st branch_status
-
-  branch='\ue0a0'
-  color='%{\e[38;5;' #  文字色を設定
-  green='114m%}'
-  red='001m%}'
-  yellow='227m%}'
-  blue='033m%}'
-  reset='%{\e[0m%}'   # reset
-
-  color='%{\e[38;5;' #  文字色を設定
-  green='114m%}'
-
-  # ブランチマーク
-  if [ ! -e  ".git" ]; then
-    # git 管理されていないディレクトリは何も返さない
-    return
-  fi
-    branch_name=`git rev-parse --abbrev-ref HEAD 2> /dev/null`
-    st=`git status 2> /dev/null`
-  if [[ -n `echo "$st" | grep "^nothing to"` ]]; then
-    # 全て commit されてクリーンな状態
-    branch_status="${color}${green}${branch}"
-  elif [[ -n `echo "$st" | grep "^Untracked files"` ]]; then
-    # git 管理されていないファイルがある状態
-    branch_status="${color}${red}${branch}?"
-  elif [[ -n `echo "$st" | grep "^Changes not staged for commit"` ]]; then
-    # git add されていないファイルがある状態
-    branch_status="${color}${red}${branch}+"
-  elif [[ -n `echo "$st" | grep "^Changes to be committed"` ]]; then
-    # git commit されていないファイルがある状態
-    branch_status="${color}${yellow}${branch}!"
-  elif [[ -n `echo "$st" | grep "^rebase in progress"` ]]; then
-    # コンフリクトが起こった状態
-    echo "${color}${red}${branch}!(no branch)${reset}"
-    return
-  else
-    # 上記以外の状態の場合
-    branch_status="${color}${blue}${branch}"
-  fi
-
-  # ブランチ名を色付きで表示する
-  echo "${branch_status}$branch_name${reset}"
-}
-
-# プロンプトが表示されるたびにプロンプト文字列を評価、置換する
-setopt prompt_subst
-
-# プロンプトの右側にメソッドの結果を表示させる
-RPROMPT='`rprompt-git-current-branch`'
-
-# fzf
-export FZF_DEFAULT_COMMAND='rg --files --hidden --follow --glob "!**/.git/*"'
-export FZF_DEFAULT_OPTS="
-    --height 40% --reverse --border=sharp --margin=0,1
-    --prompt='🔎 ' --color=light
-"
-
-# for finding files in current directories
-export FZF_CTRL_T_COMMAND='rg --files --hidden --follow --glob "!**/.git/*"'
-export FZF_CTRL_T_OPTS="
-    --preview 'bat  --color=always --style=header,grid {}'
-    --preview-window=right:60%
-"
-
-# Ref: https://wonderwall.hatenablog.com/entry/2017/10/06/063000
-# コマンドが長すぎる時に?を押すと，全コマンドが見れる
-export FZF_CTRL_R_OPTS="
-    --preview 'echo {}' --preview-window down:3:hidden:wrap --bind '?:toggle-preview'"
-
-# fgc (git checkout) - checkout git branch including remote branches
-# ref: https://qiita.com/kamykn/items/aa9920f07487559c0c7e
-fgc() {
-  local branches branch
-  branches=$(git branch --all | grep -v HEAD) &&
-  branch=$(echo "$branches" |
-           fzf-tmux -d $(( 2 + $(wc -l <<< "$branches") )) +m) &&
-  git checkout $(echo "$branch" | sed "s/.* //" | sed "s#remotes/[^/]*/##")
-}
-
-# fd - cd to selected directory
-# https://qiita.com/kamykn/items/aa9920f07487559c0c7e
-fcd() {
-  local dir
-  dir=$(find ${1:-.} -path '*/\.*' -prune \
-                  -o -type d -print 2> /dev/null | fzf +m) &&
-  cd "$dir"
-}
-
-# かつていたことのあるディレクトリに移動する
-# https://qiita.com/kamykn/items/aa9920f07487559c0c7e
-fzf-z-search() {
-    local res=$(z | sort -rn | cut -c 12- | fzf)
-    if [ -n "$res" ]; then
-        BUFFER+="cd $res"
-        zle accept-line
-    else
-        return 1
-    fi
-}
-
-zle -N fzf-z-search
-bindkey '^z' fzf-z-search
-
-# fvim: ファイル名検索+Vimで開くファイルをカレントディレクトリからfzfで検索可能に
-# ref: https://momozo.tech/2021/03/10/fzf%E3%81%A7zsh%E3%82%BF%E3%83%BC%E3%83%9F%E3%83%8A%E3%83%AB%E4%BD%9C%E6%A5%AD%E3%82%92%E5%8A%B9%E7%8E%87%E5%8C%96/
-fv() {
-  local file
-  file=$(
-         rg --files --hidden --follow --glob "!**/.git/*" | fzf \
-             --preview 'bat  --color=always --style=header,grid {}' --preview-window=right:60%
-     )
-  nvim "$file"
 }
 
 source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
