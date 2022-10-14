@@ -6,8 +6,9 @@ vim.opt.fileencoding = 'utf-8'
 
 vim.wo.number = true
 
-vim.cmd[[colorscheme gruvbox]]
+vim.cmd[[colorscheme nordfox]]
 
+vim.opt.swapfile = false
 vim.opt.mouse = 'a'
 vim.opt.clipboard:append { 'unnamedplus' }
 vim.opt.title = true
@@ -16,7 +17,7 @@ vim.opt.smartindent = true
 vim.opt.hlsearch = true
 vim.opt.backup = false
 vim.opt.showcmd = true
-vim.opt.cmdheight = 1
+vim.opt.cmdheight = 0
 vim.opt.laststatus = 2
 vim.opt.expandtab = true
 vim.opt.scrolloff = 10

@@ -18,6 +18,7 @@ packer.startup(function(use)
   -- theme
   use 'ellisonleao/gruvbox.nvim'
   use 'sainnhe/everforest'
+  use 'EdenEast/nightfox.nvim'
 
   use 'akinsho/toggleterm.nvim' -- terminal
 
