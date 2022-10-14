@@ -42,7 +42,7 @@ function rprompt-git-current-branch {
   green='114m%}'
 
   # ブランチマーク
-  if [ ! -e  ".git" ]; then
+  if ! git rev-parse 2> /dev/null; then
     # git 管理されていないディレクトリは何も返さない
     return
   fi
