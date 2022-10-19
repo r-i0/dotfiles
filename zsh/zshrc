@@ -1,7 +1,7 @@
 # Fig pre block. Keep at the top of this file.
 [[ -f "$HOME/.fig/shell/zshrc.pre.zsh" ]] && builtin source "$HOME/.fig/shell/zshrc.pre.zsh"
 
-ZSH_DIR="./zsh"
+ZSH_DIR="/Users/sudorio/dotfiles/zsh/zsh"
 if [ -d $ZSH_DIR ] && [ -r $ZSH_DIR ] && [ -x $ZSH_DIR ]; then
     # zshディレクトリより下にある、.zshファイルの分、繰り返す
     for file in ${ZSH_DIR}/**/*.zsh; do
