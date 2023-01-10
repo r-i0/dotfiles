@@ -65,3 +65,8 @@ fv() {
   nvim "$file"
 }
 
+# gcpのconfig変更
+fcp() {
+  gcloud config configurations activate $(gcloud config configurations list | awk '{print $1}' | grep -v NAME | fzf)
+}
+
