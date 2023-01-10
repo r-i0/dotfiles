@@ -6,9 +6,9 @@ end
 
 vim.cmd [[packadd packer.nvim]]
 
-packer.init{
+packer.init {
   display = {
-    open_fn = require'packer.util'.float,
+    open_fn = require 'packer.util'.float,
   }
 }
 
@@ -21,6 +21,24 @@ packer.startup(function(use)
   use 'EdenEast/nightfox.nvim'
 
   use 'akinsho/toggleterm.nvim' -- terminal
+
+  -- Packer
+  use({
+    "folke/noice.nvim",
+    config = function()
+      require("noice").setup({
+        -- add any options here
+      })
+    end,
+    requires = {
+      -- if you lazy-load any plugin below, make sure to add proper `module="..."` entries
+      "MunifTanjim/nui.nvim",
+      -- OPTIONAL:
+      --   `nvim-notify` is only needed, if you want to use the notification view.
+      --   If not available, we use `mini` as the fallback
+      "rcarriga/nvim-notify",
+    }
+  })
 
   use 'nvim-lualine/lualine.nvim' -- Statusline
   use 'nvim-lua/plenary.nvim' -- Common utilities

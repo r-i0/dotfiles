@@ -5,6 +5,7 @@ keymap.set('n', 'x', '"_x')
 -- Save with root permission (not working for now)
 --vim.api.nvim_create_user_command('W', 'w !sudo tee > /dev/null %', {})
 
+keymap.set('i', 'jj', '<ESC>')
 keymap.set('i', '<C-f>', '<right>')
 keymap.set('i', '<C-b>', '<left>')
 

@@ -50,3 +50,5 @@ autocmd("BufWritePre", {
     end
   end
 })
+
+vim.cmd[[autocmd BufWritePost plugins.lua PackerCompile]]
