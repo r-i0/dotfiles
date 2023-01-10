@@ -12,21 +12,10 @@ fi
 
 # PATH
 export PATH="$PATH:/Users/sudorio/go/bin"
+export PATH="$PATH:/Users/sudorio/.composer/vendor/bin"
 
 # 同じコマンドを履歴に残さない
 setopt HIST_IGNORE_DUPS
-
-# codeコマンド
-function code {
-    if [[ $# = 0 ]]
-    then
-        open -a "Visual Studio Code"
-    else
-        local argPath="$1"
-        [[ $1 = /* ]] && argPath="$1" || argPath="$PWD/${1#./}"
-        open -a "Visual Studio Code" "$argPath"
-    fi
-}
 
 source '/opt/homebrew/share/zsh-syntax-highlighting/zsh-syntax-highlighting.zsh'
 source "/opt/homebrew/Caskroom/google-cloud-sdk/latest/google-cloud-sdk/path.zsh.inc"
