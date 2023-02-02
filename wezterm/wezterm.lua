@@ -14,7 +14,9 @@ local keys = {
   { key = "L", mods = "LEADER", action = act({ AdjustPaneSize = { "Right", 5 } }) },
   { key = "K", mods = "LEADER", action = act({ AdjustPaneSize = { "Up", 5 } }) },
   { key = "J", mods = "LEADER", action = act({ AdjustPaneSize = { "Down", 5 } }) },
-  { key = "z", mods = "LEADER", action="TogglePaneZoomState" },
+  { key = "z", mods = "LEADER", action = "TogglePaneZoomState" },
+  { key = "c", mods = "LEADER", action = act({ CloseCurrentPane = { confirm = true } }) },
+
   -- tabs
   { key = "t", mods = "CMD", action = act.SpawnTab("DefaultDomain") },
   { key = "w", mods = "CMD", action = act.CloseCurrentTab({ confirm = true }) },
@@ -23,15 +25,15 @@ local keys = {
 }
 
 local colors = {
-    tab_bar = {
-      background = scheme.background,
-      new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },
-      new_tab_hover = { bg_color = scheme.ansi[1], fg_color = scheme.brights[8], intensity = "Bold" },
-      -- format-tab-title
-      active_tab = { bg_color = "#121212", fg_color = "#FCE8C3" },
-      inactive_tab = { bg_color = scheme.background, fg_color = "#FCE8C3" },
-      inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = "#FCE8C3" },
-    },
+  tab_bar = {
+    background = scheme.background,
+    new_tab = { bg_color = "#2e3440", fg_color = scheme.ansi[8], intensity = "Bold" },
+    new_tab_hover = { bg_color = scheme.ansi[1], fg_color = scheme.brights[8], intensity = "Bold" },
+    -- format-tab-title
+    active_tab = { bg_color = "#121212", fg_color = "#FCE8C3" },
+    inactive_tab = { bg_color = scheme.background, fg_color = "#FCE8C3" },
+    inactive_tab_hover = { bg_color = scheme.ansi[1], fg_color = "#FCE8C3" },
+  },
 }
 
 local config = {
