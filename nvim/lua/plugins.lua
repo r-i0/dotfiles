@@ -22,6 +22,11 @@ packer.startup(function(use)
 
   use 'akinsho/toggleterm.nvim' -- terminal
 
+  use {
+    'phaazon/hop.nvim',
+    branch = 'v2',
+  }
+
   -- Packer
   use({
     "folke/noice.nvim",
