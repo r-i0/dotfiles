@@ -19,11 +19,11 @@ local on_attach = function(client, bufnr)
   local opts = { noremap = true, silent = true }
 
   -- See `:help vim.lsp.*` for documentation on any of the below functions
-  buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
-  buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
-  buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
-  buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
-  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.formatting()<CR>", opts)
+  -- buf_set_keymap('n', 'gD', '<Cmd>lua vim.lsp.buf.declaration()<CR>', opts)
+  -- buf_set_keymap('n', 'gd', '<Cmd>lua vim.lsp.buf.definition()<CR>', opts)
+  -- buf_set_keymap('n', 'gi', '<cmd>lua vim.lsp.buf.implementation()<CR>', opts)
+  -- buf_set_keymap('n', 'K', '<Cmd>lua vim.lsp.buf.hover()<CR>', opts)
+  buf_set_keymap("n", "<space>f", "<cmd>lua vim.lsp.buf.format { async = true }<CR>", opts)
 end
 
 protocol.CompletionItemKind = {
@@ -71,15 +71,15 @@ nvim_lsp.tsserver.setup {
   capabilities = capabilities
 }
 
-nvim_lsp.pyright.setup{}
+nvim_lsp.pyright.setup {}
 
 nvim_lsp.gopls.setup {
   on_attach = on_attach,
   capabilities = capabilities
 }
 
-nvim_lsp.rust_analyzer.setup{
-    on_attach = on_attach,
+nvim_lsp.rust_analyzer.setup {
+  on_attach = on_attach,
 }
 
 nvim_lsp.sourcekit.setup {
@@ -135,5 +135,5 @@ vim.diagnostic.config({
 local lsp_flags = {
   -- This is the default in Nvim 0.7+
   debounce_text_changes = 150,
-require'lspconfig'.gopls.setup{}
+  require 'lspconfig'.gopls.setup {}
 }
